@@ -5,8 +5,8 @@
 /////////////////    Tracking Books I like to Read   ////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-import React from 'react'
-import * as BooksAPI from './db/BooksAPI'
+import React            from 'react'
+import * as BooksAPI    from './db/BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {

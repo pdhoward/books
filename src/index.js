@@ -1,6 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
+
+//////////////////////////////////////////////////////////////////////////
+//////////      Bookshelf App - tracking my read       //////////////////
+////////////////////////////////////////////////////////////////////////
+
+import React        from 'react'
+import ReactDOM     from 'react-dom'
+import routes       from './routes/routes'
 import './index.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))

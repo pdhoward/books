@@ -1,17 +1,15 @@
 
-## Bookshelf App
+## Books App
 
 The worlds greatest collection of books of interest to me
 
-
 ## Getting Set Up
 
-Getting the server running on your local machine takes only a few steps:
+Getting the app running on your local machine takes only a few steps:
 
 1. clone the project - `git clone https://github.com/pdhoward/books.git
 2. install its dependencies - `npm install`
-3. start the server - `node server.js`
-
+3. start the app - npm run start
 
 ## Backend Server
 
@@ -42,7 +40,5 @@ The backend API uses a fixed set of cached search results and is limited to a pa
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).

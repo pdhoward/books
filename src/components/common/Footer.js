@@ -5,7 +5,7 @@ const Footer = () => (
     <hr />
     <p className="pull-right">
       <i className="fa fa-github" aria-hidden="true" />
-        &nbsp;&nbsp; Proudly built using React.js
+        &nbsp;&nbsp; Udacity ReactJS Course
     </p>
   </footer>
 );

@@ -9,7 +9,7 @@ import Navbar                 from "./common/Navbar";
 import Footer                 from "./common/Footer";
 import ListBooks              from './common/ListBooks';
 import SearchBooks            from "./common/SearchBooks"
-import * as BooksAPI          from './db/BooksAPI'
+import * as BooksAPI          from '../db/BooksAPI'
 
 class App extends Component {
   state = {
@@ -21,7 +21,7 @@ class App extends Component {
       // todo
       //contacts: state.contacts.filter((c) => c.id !== contact.id )
     }) )
-    BooksAPI.get(bookId)
+    BooksAPI.get()
   }
 
   updateBook(book, shelf) {
@@ -66,7 +66,7 @@ class App extends Component {
 
        <Footer />
 
-       </div>
+     </div>
     );
   }
 }

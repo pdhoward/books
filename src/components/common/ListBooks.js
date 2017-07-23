@@ -1,4 +1,3 @@
-'use strict';
 
 //////////////////////////////////////////////////////////////////////////
 /////////////////  Component Renders List of Books     //////////////////
@@ -34,59 +33,46 @@ class ListBooks extends Component {
     const { books, onUpdateBook } = this.props
     const { query } = this.state
 
-    let showingContacts
+    let showingBooks
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i')
-      showingContacts = contacts.filter((contact) => match.test(contact.name))
+      showingBooks = books.filter((book) => match.test(book.name))
 
     }
     else {
-      showingContacts = contacts
+      showingBooks = books
     }
 
-    showingContacts.sort(sortBy('name'))
+    showingBooks.sort(sortBy('name'))
 
     return (
-      <div className = 'list-contacts'>
-        <div className = 'list-contacts-top'>
+      <div className='list-contacts'>
+        <div className='list-contacts-top'>
           <input
-            className = 'search-contacts'
+            className='search-contacts'
             type='text'
-            placeholder = 'Search contacts'
+            placeholder='Search contacts'
             value={this.state.query}
-            onChange = { (event) => this.updateQuery(event.target.value)}
+            onChange={ (event) => this.updateQuery(event.target.value)}
           />
         <Link
           to="/create"
-          className = "add-contact"
+          className="add-contact"
         >Add Contact</Link>
 
       </div>
 
-      {showingContacts.length !== contacts.length && (
-        <div className = 'showing-contacts'>
-          <span> Showing {showingContacts.length } out of {contacts.length } in our directory</span>
-          <button onClick={this.clearQuery}> Show All </button>
-
-        </div>
-      )}
-
       <ol className='contact-list'>
-        {showingContacts.map((contact) => (
-            <li key={contact.id} className='contact-list-item'>
-              <div className='contact-avatar' style={{
-                backgroundImage: `url(${contact.avatarURL})`
-                }}
-                />
+        {showingBooks.map((book) => (
+            <li key={book.id} className='contact-list-item'>
 
               <div className='contact-details'>
-                <p>{contact.name}</p>
-                <p>{contact.email}</p>
+                <p>{book.name}</p>            
               </div>
 
-             <button  onClick={()=>onDeleteContact(contact)} className='contact-remove' >
-              Remove
+             <button  onClick={()=>onUpdateBook(book)} className='contact-remove' >
+              Update
              </button>
 
           </li>

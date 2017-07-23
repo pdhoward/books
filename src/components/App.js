@@ -4,40 +4,44 @@
 ////////////////////////////////////////////////////////////////////////
 
 import React, { Component }   from "react";
+import { Route }              from 'react-router-dom'
 import Navbar                 from "./common/Navbar";
 import Footer                 from "./common/Footer";
-
-
-// listhelves need to display -- siomcilar to contacts app list contacts
-// search needs to do the dynamic search -- as embedded in contacts/listcontacts
+import ListBooks              from './common/ListBooks';
+import SearchBooks            from "./common/SearchBooks"
+import * as BooksAPI          from './db/BooksAPI'
 
 class App extends Component {
   state = {
-    shelves: [ ]
+    books: [ ]
   }
 
-  removeBook = (shelves) => {
+  getBook = (shelves) => {
     this.setState( (state) => ({
       // todo
       //contacts: state.contacts.filter((c) => c.id !== contact.id )
     }) )
-    //ContactsAPI.remove(contact)
+    BooksAPI.get(bookId)
   }
 
-  moveBook(shelves) {
-    // todo - move to 1 of 3 shelves currently reading, want to read, read
+  updateBook(book, shelf) {
+    BooksAPI.update(book, shelf).then(() => {
+      console.log('updated book shelf')
+      // update state and rerender so it is consistent with db
+      BooksAPI.getAll().then((books) => {
+        this.setState({ books })
+      })
+    })
 
   }
   favoriteBook(shelves) {
     // todo - star the book
-
   }
 
   componentDidMount() {
-    // retrieve all books -- from backend server?
-  //  ContactsAPI.getAll().then((contacts) => {
-  //    this.setState({ contacts })
-  //  })
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+    })
   }
   render() {
     return (
@@ -46,15 +50,15 @@ class App extends Component {
 
         <Route exact path ="/" render={() => (
           <ListBooks
-            onDeleteBook = { this.removeBook }
-            shelves={this.state.shelves}
+            onUpdateBook = { this.updateBook }
+            books={this.state.books}
             />
           )} />
 
         <Route exact path ="/search" render={({history}) => (
           <SearchBooks
-            onCreateContact={ (contact) => {
-              this.createContact(contact)
+            onCreateContact={ (book, shelf) => {
+              this.updateBook(book, shelf)
               history.push('/')
             }}
             />

@@ -10,6 +10,7 @@ import Footer                 from "./common/Footer";
 import ListBooks              from './common/ListBooks';
 import SearchBooks            from "./common/SearchBooks"
 import * as BooksAPI          from '../db/BooksAPI'
+import './App.css'
 
 class App extends Component {
   state = {

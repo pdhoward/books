@@ -40,8 +40,7 @@ class ListBooks extends Component {
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i')
-      showingBooks = books.filter((book) => match.test(book.name))
-
+      showingBooks = books.filter((book) => match.test(book.title))
     }
     else {
       showingBooks = books
@@ -57,19 +56,19 @@ class ListBooks extends Component {
               <input
                 className='search-books'
                 type='text'
-                placeholder='Search your private library by title or author'
+                placeholder='Search your private library by title'
                 value={this.state.query}
                 onChange={ (event) => this.updateQuery(event.target.value)}
               />
            </div>
 
-              <h4 className="bookshelf-title">Currently Reading</h4>
+              <h5 className="bookshelf-title">Currently Reading</h5>
               <DisplayShelf showingBooks={currentRead} />
 
-              <h4 className="bookshelf-title">Want To Read</h4>
+              <h5 className="bookshelf-title">Want To Read</h5>
               <DisplayShelf showingBooks={wantToRead} />
 
-              <h4 className="bookshelf-title">Read</h4>
+              <h5 className="bookshelf-title">Read</h5>
               <DisplayShelf showingBooks={read} />
     </div>
     )

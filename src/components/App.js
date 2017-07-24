@@ -47,17 +47,17 @@ class App extends Component {
   }
   render() {
     return (
-      <div className = 'app'>
+      <div className='app'>
         <Navbar />
 
-        <Route exact path ="/" render={() => (
+        <Route exact path="/" render={() => (
           <ListBooks
-            onUpdateBook = { this.updateBook }
+            onUpdateBook={ this.updateBook }
             books={this.state.books}
             />
           )} />
 
-        <Route exact path ="/search" render={({history}) => (
+        <Route exact path="/search" render={({history}) => (
           <SearchBooks
             onCreateContact={ (book, shelf) => {
               this.updateBook(book, shelf)

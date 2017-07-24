@@ -47,28 +47,27 @@ class ListBooks extends Component {
     showingBooks.sort(sortBy('name'))
 
     return (
-      <div className='list-contacts'>
-        <div className='list-contacts-top'>
-          <input
-            className='search-contacts'
-            type='text'
-            placeholder='Search contacts'
-            value={this.state.query}
-            onChange={ (event) => this.updateQuery(event.target.value)}
-          />
-        <Link
-          to="/create"
-          className="add-contact"
-        >Add Contact</Link>
-
-      </div>
+      <div className='list-books'>
+        {/*<div className='list-books-top'> */}
+          {/* <div className="search-books"> */}
+           <div className="search-books-bar">
+              <input
+                className='search-books'
+                type='text'
+                placeholder='Search your private library by title or author'
+                value={this.state.query}
+                onChange={ (event) => this.updateQuery(event.target.value)}
+              />
+           </div> 
+        {/*  </div> */}
+      {/*  </div> */}
 
       <ol className='contact-list'>
         {showingBooks.map((book) => (
             <li key={book.id} className='contact-list-item'>
 
               <div className='contact-details'>
-                <p>{book.name}</p>            
+                <p>{book.name}</p>
               </div>
 
              <button  onClick={()=>onUpdateBook(book)} className='contact-remove' >

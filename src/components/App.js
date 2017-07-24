@@ -26,7 +26,7 @@ class App extends Component {
     BooksAPI.get()
   }
 
-  updateBook(book, shelf) {
+  updateBooks(book, shelf) {
     BooksAPI.update(book, shelf).then(() => {
       console.log('updated book shelf')
       // update state and rerender so it is consistent with db
@@ -42,6 +42,7 @@ class App extends Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
+      console.log({books: books})
       this.setState({ books })
     })
   }
@@ -52,7 +53,7 @@ class App extends Component {
 
         <Route exact path="/" render={() => (
           <ListBooks
-            onUpdateBook={ this.updateBook }
+            onUpdateBooks={ this.updateBooks }
             books={this.state.books}
             />
           )} />
@@ -60,7 +61,7 @@ class App extends Component {
         <Route exact path="/search" render={({history}) => (
           <SearchBooks
             onCreateContact={ (book, shelf) => {
-              this.updateBook(book, shelf)
+              this.updateBooks(book, shelf)
               history.push('/')
             }}
             />

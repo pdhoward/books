@@ -7,6 +7,7 @@ import React, { Component }   from "react";
 import { Route }              from 'react-router-dom'
 import Navbar                 from "./common/Navbar";
 import Footer                 from "./common/Footer";
+import Fork                   from "./common/Fork"
 import ListBooks              from './common/ListBooks';
 import SearchBooks            from "./common/SearchBooks"
 import * as BooksAPI          from '../db/BooksAPI'
@@ -66,6 +67,7 @@ class App extends Component {
           )} />
 
        <Footer />
+       <Fork />
 
      </div>
     );

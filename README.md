@@ -1,7 +1,7 @@
 
 ## Books App
 
-The worlds greatest collection of books of interest to me
+The worlds greatest collection of books that are of interest to me
 
 ## Getting Set Up
 

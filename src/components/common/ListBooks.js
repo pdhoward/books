@@ -8,7 +8,6 @@ import React, {Component}     from 'react'
 import { Link }               from 'react-router-dom'
 import PropTypes              from 'prop-types'
 import escapeRegExp           from 'escape-string-regexp'
-import sortBy                 from 'sort-by'
 import DisplayShelf           from './DisplayShelf'
 
 class ListBooks extends Component {
@@ -48,7 +47,9 @@ class ListBooks extends Component {
       showingBooks = books
     }
 
-    showingBooks.sort(sortBy('shelf'))
+    let currentRead = showingBooks.filter((book) => {if (book.shelf === "currentlyReading") return book})
+    let wantToRead = showingBooks.filter((book) => {if (book.shelf === "wantToRead") return book})
+    let read = showingBooks.filter((book) => {if (book.shelf === "read") return book})
 
     return (
       <div className='list-books'>
@@ -62,10 +63,14 @@ class ListBooks extends Component {
               />
            </div>
 
-      {/* Currently Reading */}
-          <DisplayShelf showingBooks={showingBooks} />
+              <h4 className="bookshelf-title">Currently Reading</h4>
+              <DisplayShelf showingBooks={currentRead} />
 
+              <h4 className="bookshelf-title">Want To Read</h4>
+              <DisplayShelf showingBooks={wantToRead} />
 
+              <h4 className="bookshelf-title">Read</h4>
+              <DisplayShelf showingBooks={read} />
     </div>
     )
   }

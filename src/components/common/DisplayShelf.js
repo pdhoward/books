@@ -10,7 +10,8 @@ const DisplayShelf = (prop) => {
   let showingBooks = prop.showingBooks
   return (
 
-<ol className="books-grid">
+<ol className="books-grid">  
+
   {showingBooks.map((book) => (
 
   <li key={book.id}>

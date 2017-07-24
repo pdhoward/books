@@ -28,6 +28,14 @@ class ListBooks extends Component {
   clearQuery = () => {
     this.setState({ query: ''})
   }
+  componentDidUpdate() {
+    console.log(">>>>DEBUG<<<<")
+  //  console.log(books[0].imageLinks.smallThumbnail)
+    let bookx = this.props.books[0]
+    console.log(bookx)
+    console.log(">>>>DEBUG TWO<<<<")
+    console.log(bookx.imageLinks.thumbnail)
+  }
 
   render() {
     const { books, onUpdateBook } = this.props
@@ -44,7 +52,7 @@ class ListBooks extends Component {
       showingBooks = books
     }
 
-    showingBooks.sort(sortBy('name'))
+    showingBooks.sort(sortBy('shelf'))
 
     return (
       <div className='list-books'>
@@ -58,25 +66,34 @@ class ListBooks extends Component {
                 value={this.state.query}
                 onChange={ (event) => this.updateQuery(event.target.value)}
               />
-           </div> 
+           </div>
         {/*  </div> */}
       {/*  </div> */}
 
-      <ol className='contact-list'>
+      <ol className="books-grid">
         {showingBooks.map((book) => (
-            <li key={book.id} className='contact-list-item'>
 
-              <div className='contact-details'>
-                <p>{book.name}</p>
+        <li>
+          <div className="book">
+            <div className="book-top">
+              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+              <div className="book-shelf-changer">
+                <select>
+                  <option value="none" disabled>Move to...</option>
+                  <option value="currentlyReading">Currently Reading</option>
+                  <option value="wantToRead">Want to Read</option>
+                  <option value="read">Read</option>
+                  <option value="none">None</option>
+                </select>
               </div>
-
-             <button  onClick={()=>onUpdateBook(book)} className='contact-remove' >
-              Update
-             </button>
-
-          </li>
+            </div>
+            <div className="book-title">{book.title}</div>
+            <div className="book-authors">{book.authors[0]}</div>
+          </div>
+        </li>
         ))}
       </ol>
+
     </div>
     )
   }

@@ -35,6 +35,8 @@ class App extends Component {
       })
     })
 
+  
+
   }
   favoriteBook(shelves) {
     // todo - star the book

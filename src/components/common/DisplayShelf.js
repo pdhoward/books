@@ -1,20 +1,40 @@
 
 //////////////////////////////////////////////////////////////////////////
 /////////////////  Stateless Functional Component to List ///////////////
-/////////////////       items on the prop                 ///////////////
+/////////////////       Books on the Shelf               ///////////////
 ////////////////////////////////////////////////////////////////////////
 
-import React       from 'react'
+import React        from 'react'
+import Select       from 'react-select'
 
 const DisplayShelf = (prop) => {
   let showingBooks = prop.showingBooks
+  let selectedOption = prop.selectedOption
+
+  let options = [
+  { disabled: "none", label: "Move to ..." },
+  { value: 'currentlyReading', label: 'Currently Reading' },
+  { value: 'wantToRead', label: 'Want To Read' },
+  { value: "read", label: "Read"},
+  { value: "none", label: "None"}
+    ];
+
+  // function to update parent state when new shelf is selected
+  const makeChoice = (event) => {
+    let book={
+      id: event.target.name
+    }
+    let shelf=event.target.value
+    selectedOption(book, shelf)
+  }
+
   return (
 
-<ol className="books-grid">  
+<ol className="books-grid">
 
   {showingBooks.map((book) => (
 
-  <li key={book.id}>
+  <li key={book.id} >
     <div className="book">
       <div className="book-top">
         <div className="book-cover" style={{ width: 128,
@@ -23,14 +43,20 @@ const DisplayShelf = (prop) => {
         </div>
 
         <div className="book-shelf-changer">
-          <select>
-            <option value="none" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
-          </select>
+
+          <select id="readlist" name={book.id} onChange={makeChoice} >
+              <option value="none" disabled>Move to...</option>
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+              <option value="none">None</option>
+            </select>
+
         </div>
+
+
+
+
 
       </div>
       <div className="book-title">{book.title}</div>

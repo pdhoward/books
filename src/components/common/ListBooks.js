@@ -28,12 +28,19 @@ class ListBooks extends Component {
   clearQuery = () => {
     this.setState({ query: ''})
   }
+
+  selectedOption = (book, shelf) => {
+      // call from displayshelf -- update the shelf property of book      
+      this.props.onUpdateBooks(book, shelf)
+  }
+
   componentDidUpdate() {
 
   }
 
   render() {
-    const { books, onUpdateBook } = this.props
+
+    const { books } = this.props
     const { query } = this.state
 
     let showingBooks
@@ -63,13 +70,13 @@ class ListBooks extends Component {
            </div>
 
               <h5 className="bookshelf-title">Currently Reading</h5>
-              <DisplayShelf showingBooks={currentRead} />
+              <DisplayShelf showingBooks={currentRead} selectedOption={this.selectedOption} />
 
               <h5 className="bookshelf-title">Want To Read</h5>
-              <DisplayShelf showingBooks={wantToRead} />
+              <DisplayShelf showingBooks={wantToRead} selectedOption={this.selectedOption} />
 
               <h5 className="bookshelf-title">Read</h5>
-              <DisplayShelf showingBooks={read} />
+              <DisplayShelf showingBooks={read} selectedOption={this.selectedOption} />
     </div>
     )
   }

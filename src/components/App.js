@@ -14,9 +14,18 @@ import * as BooksAPI          from '../db/BooksAPI'
 import './App.css'
 
 class App extends Component {
-  state = {
-    books: [ ]
-  }
+
+  constructor() {
+    super()
+      this.state = {
+        books: [ ]
+      }
+      // binding functions to the component to set context
+      this.getBook =        this.getBook.bind(this)
+      this.getAllBooks =    this.getAllBooks.bind(this)
+      this.updateBooks =    this.updateBooks.bind(this)
+      this.favoriteBook =   this.favoriteBook.bind(this)
+    }
 
   getBook = (shelves) => {
     this.setState( (state) => ({
@@ -26,16 +35,19 @@ class App extends Component {
     BooksAPI.get()
   }
 
+  getAllBooks = () => {
+    BooksAPI.getAll().then((books) => {
+      console.log({books: books})
+      this.setState({ books })
+    })
+  }
+
   updateBooks(book, shelf) {
     BooksAPI.update(book, shelf).then(() => {
       console.log('updated book shelf')
       // update state and rerender so it is consistent with db
-      BooksAPI.getAll().then((books) => {
-        this.setState({ books })
-      })
+      this.getAllBooks()
     })
-
-  
 
   }
   favoriteBook(shelves) {
@@ -43,11 +55,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      console.log({books: books})
-      this.setState({ books })
-    })
+    this.getAllBooks()
   }
+
   render() {
     return (
       <div className='app'>

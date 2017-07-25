@@ -5,19 +5,10 @@
 ////////////////////////////////////////////////////////////////////////
 
 import React        from 'react'
-import Select       from 'react-select'
 
 const DisplayShelf = (prop) => {
   let showingBooks = prop.showingBooks
-  let selectedOption = prop.selectedOption
-
-  let options = [
-  { disabled: "none", label: "Move to ..." },
-  { value: 'currentlyReading', label: 'Currently Reading' },
-  { value: 'wantToRead', label: 'Want To Read' },
-  { value: "read", label: "Read"},
-  { value: "none", label: "None"}
-    ];
+  let selectedOption = prop.selectedOption  
 
   // function to update parent state when new shelf is selected
   const makeChoice = (event) => {

@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////
 
 import React, {Component}     from 'react'
-import { Link }               from 'react-router-dom'
 import PropTypes              from 'prop-types'
 import escapeRegExp           from 'escape-string-regexp'
 import DisplayShelf           from './DisplayShelf'
@@ -30,7 +29,7 @@ class ListBooks extends Component {
   }
 
   selectedOption = (book, shelf) => {
-      // call from displayshelf -- update the shelf property of book      
+      // call from displayshelf -- update the shelf property of book
       this.props.onUpdateBooks(book, shelf)
   }
 

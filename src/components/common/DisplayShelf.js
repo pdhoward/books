@@ -8,7 +8,7 @@ import React        from 'react'
 
 const DisplayShelf = (prop) => {
   let showingBooks = prop.showingBooks
-  let selectedOption = prop.selectedOption  
+  let selectedOption = prop.selectedOption
 
   // function to update parent state when new shelf is selected
   const makeChoice = (event) => {
@@ -44,10 +44,6 @@ const DisplayShelf = (prop) => {
             </select>
 
         </div>
-
-
-
-
 
       </div>
       <div className="book-title">{book.title}</div>

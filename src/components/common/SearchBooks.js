@@ -21,8 +21,12 @@ class SearchBooks extends Component {
      books: []
    }
 
-  searchAllBooks = (q, max) => {
-    BooksAPI.search(q, max).then((books) => {
+   showingbooks = []
+
+   max = 10
+
+  searchAllBooks = (query, max) => {
+    BooksAPI.search(query, max).then((books) => {
       console.log({books: books})
       this.setState({ books })
     })
@@ -40,6 +44,16 @@ class SearchBooks extends Component {
       // update via parent component a book selected and associated shelf
       this.props.onSelectBook(book, shelf)
   }
+  renderBooks() {
+
+    if (this.showingBooks) {
+      return (
+        <div>
+          <h5 className="bookshelf-title">Make a Selection</h5>
+          <DisplayShelf showingBooks={this.showingBooks} selectedOption={this.selectedOption} />
+        </div>
+    )
+  }}
 
   componentDidUpdate() {
 
@@ -50,17 +64,15 @@ class SearchBooks extends Component {
     const { query } = this.state
     const { books } = this.state
 
-    let showingBooks
+//    let showingBooks
+//    let max = 10
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i')
-      showingBooks = books.filter((book) => match.test(book.title))
-    }
-    else {
-      showingBooks = books
+      this.showingBooks = this.searchAllBooks(match, this.max)
     }
 
-    let none = showingBooks.filter((book) => {if (book.shelf === "none") return book})
+//    let none = showingBooks.filter((book) => {if (book.shelf === "none") return book})
 
     return (
       <div className='list-books'>
@@ -73,10 +85,7 @@ class SearchBooks extends Component {
                 onChange={ (event) => this.updateQuery(event.target.value)}
               />
            </div>
-
-              <h5 className="bookshelf-title">Make a Selection</h5>
-              <DisplayShelf showingBooks={none} selectedOption={this.selectedOption} />
-
+            {this.renderBooks()}
     </div>
     )
   }

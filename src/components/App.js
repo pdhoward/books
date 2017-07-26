@@ -72,10 +72,10 @@ class App extends Component {
 
         <Route exact path="/search" render={({history}) => (
           <SearchBooks
-            onCreateContact={ (book, shelf) => {
+            onSelectBook={ (book, shelf) => {
               this.updateBooks(book, shelf)
               history.push('/')
-            }}
+            } }
             />
           )} />
 

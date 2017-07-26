@@ -1,56 +1,84 @@
 
-
 //////////////////////////////////////////////////////////////////////////
-/////////////////         Search Books                  //////////////////
-/////////////////    Tracking Books I like to Read   ////////////////////
+/////////////////         Search Public Library        //////////////////
+/////////////////              Backend db              //////////////////
 ////////////////////////////////////////////////////////////////////////
 
-import React            from 'react'
-//import * as BooksAPI    from '../../db/BooksAPI'
+import React, {Component}     from 'react'
+import PropTypes              from 'prop-types'
+import escapeRegExp           from 'escape-string-regexp'
+import DisplayShelf           from './DisplayShelf'
+import * as BooksAPI          from '../../db/BooksAPI'
 
+class SearchBooks extends Component {
 
-class SearchBooks extends React.Component {
+  static propTypes = {
+     onSelectBook: PropTypes.func.isRequired
+   }
+
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: true
+     query: '',
+     books: []
+   }
+
+  searchAllBooks = (q, max) => {
+    BooksAPI.search(q, max).then((books) => {
+      console.log({books: books})
+      this.setState({ books })
+    })
+  }
+
+  updateQuery = (query) => {
+    this.setState({ query: query.trim() })
+  }
+
+  clearQuery = () => {
+    this.setState({ query: ''})
+  }
+
+  selectedOption = (book, shelf) => {
+      // update via parent component a book selected and associated shelf
+      this.props.onSelectBook(book, shelf)
+  }
+
+  componentDidUpdate() {
+
   }
 
   render() {
 
+    const { query } = this.state
+    const { books } = this.state
+
+    let showingBooks
+
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i')
+      showingBooks = books.filter((book) => match.test(book.title))
+    }
+    else {
+      showingBooks = books
+    }
+
+    let none = showingBooks.filter((book) => {if (book.shelf === "none") return book})
+
     return (
-      <div className="app">
+      <div className='list-books'>
+           <div className="search-books-bar">
+              <input
+                className='search-books'
+                type='text'
+                placeholder='Search the public library by title and author'
+                value={this.state.query}
+                onChange={ (event) => this.updateQuery(event.target.value)}
+              />
+           </div>
 
-        {this.state.showSearchPage ? (
+              <h5 className="bookshelf-title">Make a Selection</h5>
+              <DisplayShelf showingBooks={none} selectedOption={this.selectedOption} />
 
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author"/>
-              </div>
-            </div>
-
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-        </div>
-
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-        </div>
-      )}
-      </div>
+    </div>
     )
   }
 }
-
-
 export default SearchBooks

@@ -16,19 +16,29 @@ class SearchBooks extends Component {
      onSelectBook: PropTypes.func.isRequired
    }
 
-  state = {
-     query: '',
-     books: []
-   }
+  constructor() {
+     super()
+       this.state = {
+         query: ''
+       }
+       // binding functions to the component to set context
+       this.searchAllBooks =    this.searchAllBooks.bind(this)
+     }
 
    showingbooks = []
-
    max = 10
 
+
   searchAllBooks = (query, max) => {
+    console.log(">>>>>>>>>>DEBUG SEARCH API <<<<<<<<<<<<")
+    console.log({query: query})
+    console.log({max: max})
+
     BooksAPI.search(query, max).then((books) => {
       console.log({books: books})
-      this.setState({ books })
+
+      console.log(">>>>>>>>>>>>HACK<<<<<<<<<<<<<<<")
+      this.showingBooks = books
     })
   }
 
@@ -44,35 +54,22 @@ class SearchBooks extends Component {
       // update via parent component a book selected and associated shelf
       this.props.onSelectBook(book, shelf)
   }
-  renderBooks() {
 
+  renderBooks() {
     if (this.showingBooks) {
       return (
         <div>
           <h5 className="bookshelf-title">Make a Selection</h5>
           <DisplayShelf showingBooks={this.showingBooks} selectedOption={this.selectedOption} />
         </div>
-    )
-  }}
-
-  componentDidUpdate() {
-
-  }
+    )}}
 
   render() {
-
-    const { query } = this.state
-    const { books } = this.state
-
-//    let showingBooks
-//    let max = 10
+    let { query } = this.state
 
     if (query) {
-      const match = new RegExp(escapeRegExp(query), 'i')
-      this.showingBooks = this.searchAllBooks(match, this.max)
+      this.searchAllBooks(query, this.max)
     }
-
-//    let none = showingBooks.filter((book) => {if (book.shelf === "none") return book})
 
     return (
       <div className='list-books'>

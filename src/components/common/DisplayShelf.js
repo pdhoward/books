@@ -38,7 +38,7 @@ const DisplayShelf = (prop) => {
               </div>
 
               <div className="book-shelf-changer">
-                <select id="readlist" name={book.id} onChange={makeChoice} >
+                <select id="readlist" name={book.id} value={book.shelf} onChange={makeChoice} >
                   <option value="" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
@@ -49,7 +49,7 @@ const DisplayShelf = (prop) => {
 
           </div>
             <div className="book-title">{book.title}</div>
-            <div className="book-authors">{book.authors[0]}</div>          
+            <div className="book-authors">{book.authors[0]}</div>
         </div>
       </li>
      ))}

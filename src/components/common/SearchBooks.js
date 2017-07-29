@@ -61,7 +61,6 @@ class SearchBooks extends Component {
     let { query } = this.state
     let { books } = this.state
 
-  //  let showingBooks =[]
     let none
 
     if (query) {
@@ -88,11 +87,12 @@ class SearchBooks extends Component {
            </div>
 
          {this.showingBooks.length !== 0 && (
-           <div>
-             <h5 className="bookshelf-title">Make a Selection</h5>
-             <DisplayShelf showingBooks={none} selectedOption={this.selectedOption} />
+            <div>
+              <h5 className="bookshelf-title">Make a Selection</h5>
+              <DisplayShelf showingBooks={none} selectedOption={this.selectedOption} />
            </div>
          )}
+
     </div>
     )
   }

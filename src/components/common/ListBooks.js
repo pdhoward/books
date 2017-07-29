@@ -33,10 +33,6 @@ class ListBooks extends Component {
       this.props.onUpdateBooks(book, shelf)
   }
 
-  componentDidUpdate() {
-
-  }
-
   render() {
 
     const { books } = this.props

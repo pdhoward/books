@@ -29,6 +29,7 @@ class SearchBooks extends Component {
      }
 
    showingBooks = []
+   searchBooks = []
    max = 10
 
 
@@ -39,7 +40,8 @@ class SearchBooks extends Component {
 
     BooksAPI.search(query, max).then((books) => {
       console.log({books: books})
-      this.setState({books: books})
+  //    this.setState({books: books})
+        this.searchBooks = books
     })
   }
 
@@ -56,22 +58,33 @@ class SearchBooks extends Component {
       this.props.onSelectBook(book, shelf)
   }
 
+  componentWillUpdate(newProps, newState) {
+
+    console.log("LIFECYCLE componentwillupdate >>>>>>>>>>>>>")
+    console.log({state: this.state.query})
+    console.log(JSON.stringify(newState))
+
+  //  let { query } = this.state
+  //  let { books } = this.state
+    let {query} = newState
+    if (query) {
+      this.searchAllBooks(query, this.max)
+        const match = new RegExp(escapeRegExp(query), 'i')
+//      this.showingBooks = books.filter((book) => match.test(book.title))
+        this.showingBooks = this.searchBooks.filter((book) => match.test(book.title))
+      }
+
+  }
+
 
   render() {
-    let { query } = this.state
-    let { books } = this.state
 
     let none
 
-    if (query) {
-      this.searchAllBooks(query, this.max)
-      const match = new RegExp(escapeRegExp(query), 'i')
-      this.showingBooks = books.filter((book) => match.test(book.title))
-
-    }
-
     if (this.showingBooks) {
         none = this.showingBooks.filter((book) => {if (book.shelf === "none") return book})
+        console.log("RENDER >>>>>>>>>>>>>>>>>>")
+        console.log(this.showingBooks[0])
     }
 
     return (

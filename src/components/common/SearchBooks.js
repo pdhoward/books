@@ -7,10 +7,8 @@
 import React, {Component}     from 'react'
 import PropTypes              from 'prop-types'
 import escapeRegExp           from 'escape-string-regexp'
-import DisplayShelf           from './DisplayShelf'
+import DisplaySearch           from './DisplaySearch'
 import * as BooksAPI          from '../../db/BooksAPI'
-
-
 
 class SearchBooks extends Component {
 
@@ -27,6 +25,7 @@ class SearchBooks extends Component {
        // binding functions to the component to set context
        this.searchAllBooks =    this.searchAllBooks.bind(this)
        this.selectedOption =    this.selectedOption.bind(this)
+       this.renderSearch =      this.renderSearch.bind(this)
      }
 
    showingBooks = []
@@ -34,22 +33,21 @@ class SearchBooks extends Component {
    max = 10
 
 
-  searchAllBooks = (query, max, cb) => {
-    console.log(">>>>>>>>>>DEBUG SEARCH API <<<<<<<<<<<<")
-    console.log({query: query})
-    console.log({max: max})
-
+  searchAllBooks = (query, max) => {
+    console.log(">>>>>>>>>SEARCH TRIGGERED<<<<<<<<<<")
     if(query) {
 
+      console.log(">>>>>>>>>SEARCH IN PROGRESS<<<<<<<<<<")
     BooksAPI.search(query, max).then((books) => {
       console.log({books: books})
-      return cb(books)
-    })
-  }
+      this.setState({books: books})
+      })
+    }
   }
 
   updateQuery = (query) => {
     this.setState({ query: query.trim() })
+    this.searchAllBooks(query, this.max)
   }
 
   clearQuery = () => {
@@ -61,10 +59,15 @@ class SearchBooks extends Component {
       this.props.onSelectBook(book, shelf)
   }
 
-//<DisplayShelf showingBooks={bks} selectedOption={opt} />
+  renderSearch = () => {
+    console.log("DISPLAY SEARCH RESULTS")
+    return this.state.books.map(book => (
+        <DisplaySearch key={book.id} book={book} selectedOption={this.selectedOption} />
+    ))
+  }
+
   render() {
 
-    let none
 /*
     if (this.showingBooks) {
         none = this.showingBooks.filter((book) => {if (book.shelf === "none") return book})
@@ -84,19 +87,12 @@ class SearchBooks extends Component {
               />
            </div>
 
-       {this.searchAllBooks(this.state.query, this.max, function(bks) {
-              console.log(bks.length)
-              bks.length !== 0 && (
-              <div>
-                <h5 className="bookshelf-title">Make a Selection</h5>
-                <DisplayShelf showingBooks={bks} selectedOption={() => {console.log('fix this')}} />
-             </div>
-              )}
-           )}
-
-
-
-    </div>
+           <div>
+             <ol className="books-grid">
+                {this.renderSearch()}
+             </ol>
+          </div>
+      </div>
     )
   }
 }

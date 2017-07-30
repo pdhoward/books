@@ -26,6 +26,7 @@ class SearchBooks extends Component {
        }
        // binding functions to the component to set context
        this.searchAllBooks =    this.searchAllBooks.bind(this)
+       this.selectedOption =    this.selectedOption.bind(this)
      }
 
    showingBooks = []
@@ -33,16 +34,18 @@ class SearchBooks extends Component {
    max = 10
 
 
-  searchAllBooks = (query, max) => {
+  searchAllBooks = (query, max, cb) => {
     console.log(">>>>>>>>>>DEBUG SEARCH API <<<<<<<<<<<<")
     console.log({query: query})
     console.log({max: max})
 
+    if(query) {
+
     BooksAPI.search(query, max).then((books) => {
       console.log({books: books})
-  //    this.setState({books: books})
-        this.searchBooks = books
+      return cb(books)
     })
+  }
   }
 
   updateQuery = (query) => {
@@ -58,35 +61,17 @@ class SearchBooks extends Component {
       this.props.onSelectBook(book, shelf)
   }
 
-  componentWillUpdate(newProps, newState) {
-
-    console.log("LIFECYCLE componentwillupdate >>>>>>>>>>>>>")
-    console.log({state: this.state.query})
-    console.log(JSON.stringify(newState))
-
-  //  let { query } = this.state
-  //  let { books } = this.state
-    let {query} = newState
-    if (query) {
-      this.searchAllBooks(query, this.max)
-        const match = new RegExp(escapeRegExp(query), 'i')
-//      this.showingBooks = books.filter((book) => match.test(book.title))
-        this.showingBooks = this.searchBooks.filter((book) => match.test(book.title))
-      }
-
-  }
-
-
+//<DisplayShelf showingBooks={bks} selectedOption={opt} />
   render() {
 
     let none
-
+/*
     if (this.showingBooks) {
         none = this.showingBooks.filter((book) => {if (book.shelf === "none") return book})
         console.log("RENDER >>>>>>>>>>>>>>>>>>")
         console.log(this.showingBooks[0])
     }
-
+*/
     return (
       <div className='list-books'>
            <div className="search-books-bar">
@@ -99,12 +84,17 @@ class SearchBooks extends Component {
               />
            </div>
 
-         {this.showingBooks.length !== 0 && (
-            <div>
-              <h5 className="bookshelf-title">Make a Selection</h5>
-              <DisplayShelf showingBooks={none} selectedOption={this.selectedOption} />
-           </div>
-         )}
+       {this.searchAllBooks(this.state.query, this.max, function(bks) {
+              console.log(bks.length)
+              bks.length !== 0 && (
+              <div>
+                <h5 className="bookshelf-title">Make a Selection</h5>
+                <DisplayShelf showingBooks={bks} selectedOption={() => {console.log('fix this')}} />
+             </div>
+              )}
+           )}
+
+
 
     </div>
     )

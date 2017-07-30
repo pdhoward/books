@@ -6,7 +6,6 @@
 
 import React, {Component}     from 'react'
 import PropTypes              from 'prop-types'
-import escapeRegExp           from 'escape-string-regexp'
 import DisplaySearch           from './DisplaySearch'
 import * as BooksAPI          from '../../db/BooksAPI'
 
@@ -28,21 +27,23 @@ class SearchBooks extends Component {
        this.renderSearch =      this.renderSearch.bind(this)
      }
 
-   showingBooks = []
-   searchBooks = []
    max = 10
 
+   // searches the db of available books. Backend server accessed via api
+   // reference SEARCH_TERMS.md for list of valid search terms
 
   searchAllBooks = (query, max) => {
-    console.log(">>>>>>>>>SEARCH TRIGGERED<<<<<<<<<<")
+    // clear search results if query string is undefined
+    if(query === ""){
+      let books=[]
+      this.setState({books:books})
+      }
+    // if query detected, execute search and update state
     if(query) {
-
-      console.log(">>>>>>>>>SEARCH IN PROGRESS<<<<<<<<<<")
-    BooksAPI.search(query, max).then((books) => {
-      console.log({books: books})
-      this.setState({books: books})
-      })
-    }
+      BooksAPI.search(query, max).then((books) => {
+        this.setState({books: books})
+        })
+      }
   }
 
   updateQuery = (query) => {
@@ -50,17 +51,13 @@ class SearchBooks extends Component {
     this.searchAllBooks(query, this.max)
   }
 
-  clearQuery = () => {
-    this.setState({ query: ''})
-  }
-
+  // move a book from public to private library when menu option selected
   selectedOption = (book, shelf) => {
-      // update via parent component a book selected and associated shelf
       this.props.onSelectBook(book, shelf)
   }
-
+  
+  // render results of api search
   renderSearch = () => {
-    console.log("DISPLAY SEARCH RESULTS")
     return this.state.books.map(book => (
         <DisplaySearch key={book.id} book={book} selectedOption={this.selectedOption} />
     ))
@@ -68,13 +65,6 @@ class SearchBooks extends Component {
 
   render() {
 
-/*
-    if (this.showingBooks) {
-        none = this.showingBooks.filter((book) => {if (book.shelf === "none") return book})
-        console.log("RENDER >>>>>>>>>>>>>>>>>>")
-        console.log(this.showingBooks[0])
-    }
-*/
     return (
       <div className='list-books'>
            <div className="search-books-bar">

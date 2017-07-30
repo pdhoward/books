@@ -24,10 +24,6 @@ class ListBooks extends Component {
     this.setState({ query: query.trim() })
   }
 
-  clearQuery = () => {
-    this.setState({ query: ''})
-  }
-
   selectedOption = (book, shelf) => {
       // call from displayshelf -- update the shelf property of book
       this.props.onUpdateBooks(book, shelf)

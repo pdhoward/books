@@ -6,7 +6,6 @@
 
 import React, {Component}     from 'react'
 import PropTypes              from 'prop-types'
-import deepcopy               from 'deepcopy'
 import DisplaySearch          from './DisplaySearch'
 import * as BooksAPI          from '../../db/BooksAPI'
 
@@ -92,7 +91,7 @@ class SearchBooks extends Component {
            <div>
               <ol className="books-grid">
                 {this.renderSearch()}
-              </ol>      
+              </ol>
           </div>
       </div>
     )

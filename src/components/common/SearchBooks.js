@@ -12,6 +12,7 @@ import * as BooksAPI          from '../../db/BooksAPI'
 class SearchBooks extends Component {
 
   static propTypes = {
+     privateLibrary: PropTypes.array.isRequired,
      onSelectBook: PropTypes.func.isRequired
    }
 
@@ -38,11 +39,22 @@ class SearchBooks extends Component {
       let books=[]
       this.setState({books:books})
       }
-    // if query detected, execute search and update state
+    // if query detected, execute search and
+    // sync the search results with private library (public shelf cannot be trusted)
+    // update state with results
     if(query) {
+      let x = this.props.privateLibrary.length
       BooksAPI.search(query, max).then((books) => {
-        this.setState({books: books})
-
+        let pubLib = books.map((book) => {
+            book.shelf = "none"
+            for (let i = 0; i < x; i++) {
+              if (book.id === this.props.privateLibrary[i].id) {
+                book.shelf = this.props.privateLibrary[i].shelf
+              }
+            }
+            return book
+          })
+        this.setState({books: pubLib})
       })
     }
   }
@@ -60,7 +72,7 @@ class SearchBooks extends Component {
        // clone old state for search results on books
        let oldArray = this.state.books.slice()
        let newArray = oldArray.map((bk) => {
-            if (bk.id == book.id) {
+            if (bk.id === book.id) {
               bk.shelf = shelf }
             return bk
           })

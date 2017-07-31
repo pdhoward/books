@@ -64,14 +64,15 @@ class App extends Component {
         <Route exact path="/" render={() => (
           <ListBooks
             onUpdateBooks={ this.updateBooks }
-            books={this.state.books}
+            books={ this.state.books }
             />
           )} />
 
         <Route exact path="/search" render={({history}) => (
           <SearchBooks
+             privateLibrary={ this.state.books }
              onSelectBook={ (book, shelf) => {
-              this.updateBooks(book, shelf)              
+              this.updateBooks(book, shelf)
              }}
             />
           )} />

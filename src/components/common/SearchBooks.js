@@ -41,9 +41,9 @@ class SearchBooks extends Component {
     // if query detected, execute search and update state
     if(query) {
       BooksAPI.search(query, max).then((books) => {
-        this.setState({books: books})
-        })
-      }
+        this.setState({books: books})        
+      })
+    }
   }
 
   updateQuery = (query) => {
@@ -55,7 +55,7 @@ class SearchBooks extends Component {
   selectedOption = (book, shelf) => {
       this.props.onSelectBook(book, shelf)
   }
-  
+
   // render results of api search
   renderSearch = () => {
     return this.state.books.map(book => (

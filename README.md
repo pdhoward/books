@@ -13,7 +13,7 @@ Getting the app running on your local machine takes only a few steps:
 
 ## Backend Server
 
-Note that a backend server has been provided for testing purposes 
+Note that a backend server has been provided for testing purposes
 
 Thank you to [Udacity](https://www.udacity.com/)
 
@@ -34,7 +34,10 @@ BooksAPI.js contains the set of methods for all required operations
 * Returns a Promise which resolves to a JSON object containing a collection of book objects.
 * These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
 
-## Important
+## License and Use
+ [LICENSE.md](LICENSE.txt).
+
+## Allowed Search Terms
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
 
 ## create-react-app

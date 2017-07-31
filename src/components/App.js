@@ -37,14 +37,12 @@ class App extends Component {
 
   getAllBooks = () => {
     BooksAPI.getAll().then((books) => {
-      console.log({books: books})
       this.setState({ books })
     })
   }
 
   updateBooks(book, shelf) {
     BooksAPI.update(book, shelf).then(() => {
-      console.log('updated book shelf')
       // update state and rerender so it is consistent with db
       this.getAllBooks()
     })
@@ -72,10 +70,9 @@ class App extends Component {
 
         <Route exact path="/search" render={({history}) => (
           <SearchBooks
-            onSelectBook={ (book, shelf) => {
-              this.updateBooks(book, shelf)
-              history.push('/')
-            } }
+             onSelectBook={ (book, shelf) => {
+              this.updateBooks(book, shelf)              
+             }}
             />
           )} />
 

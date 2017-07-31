@@ -11,16 +11,12 @@ class DisplaySearch extends Component {
   book = this.props.book
   selectedOption = this.props.selectedOption
 
-  // function to update parent state when new shelf is selected
+  // function to update parent state with selected book for private library
   makeChoice = (event) => {
     let book={
       id: event.target.name
     }
     let shelf=event.target.value
-    console.log(">>>DISPLAYSHELF<<<<<")
-    console.log({book: book})
-    console.log({shelf: shelf})
-
     this.selectedOption(book, shelf)
   }
 
@@ -29,6 +25,7 @@ class DisplaySearch extends Component {
   let book = this.book
 
   return (
+
       <li key={book.id} >
           <div className="book">
             <div className="book-top">
@@ -53,7 +50,7 @@ class DisplaySearch extends Component {
               <div className="book-authors">{book.authors[0]}</div>
             )}
         </div>
-    </li>
+      </li>
 
 )}}
 

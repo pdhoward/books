@@ -6,7 +6,8 @@
 
 import React, {Component}     from 'react'
 import PropTypes              from 'prop-types'
-import DisplaySearch           from './DisplaySearch'
+import deepcopy               from 'deepcopy'
+import DisplaySearch          from './DisplaySearch'
 import * as BooksAPI          from '../../db/BooksAPI'
 
 class SearchBooks extends Component {
@@ -41,7 +42,8 @@ class SearchBooks extends Component {
     // if query detected, execute search and update state
     if(query) {
       BooksAPI.search(query, max).then((books) => {
-        this.setState({books: books})        
+        this.setState({books: books})
+
       })
     }
   }
@@ -52,10 +54,20 @@ class SearchBooks extends Component {
   }
 
   // move a book from public to private library when menu option selected
+  // note this also updates the value for option selected on the book tag
   selectedOption = (book, shelf) => {
-      this.props.onSelectBook(book, shelf)
-  }
+       this.props.onSelectBook(book, shelf)
 
+       // clone old state for search results on books
+       let oldArray = this.state.books.slice()
+       let newArray = oldArray.map((bk) => {
+            if (bk.id == book.id) {
+              bk.shelf = shelf }
+            return bk
+          })
+
+      this.setState({ books: newArray})
+    }
   // render results of api search
   renderSearch = () => {
     return this.state.books.map(book => (
@@ -78,9 +90,9 @@ class SearchBooks extends Component {
            </div>
 
            <div>
-             <ol className="books-grid">
+              <ol className="books-grid">
                 {this.renderSearch()}
-             </ol>
+              </ol>      
           </div>
       </div>
     )

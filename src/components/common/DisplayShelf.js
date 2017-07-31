@@ -16,10 +16,6 @@ const DisplayShelf = (prop) => {
       id: event.target.name
     }
     let shelf=event.target.value
-    console.log(">>>DISPLAYSHELF<<<<<")
-    console.log({book: book})
-    console.log({shelf: shelf})
-
     selectedOption(book, shelf)
   }
 

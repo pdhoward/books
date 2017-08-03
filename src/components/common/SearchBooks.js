@@ -60,27 +60,39 @@ class SearchBooks extends Component {
   }
 
   updateQuery = (query) => {
+    console.log(">>>>>UPDATE QUERY <<<<<<<<")
+    console.log(this.state.books)
     this.setState({ query: query.trim() })
     this.searchAllBooks(query, this.max)
   }
 
   // move a book from public to private library when menu option selected
-  // note this also updates the value for option selected on the book tag
+  // note this also updates the value for option selected for the shelf in the public search
   selectedOption = (book, shelf) => {
-       this.props.onSelectBook(book, shelf)
-
+      this.props.onSelectBook(book, shelf)
+      console.log(">>>>> BOOK TO UPDATE<<<<<<<<")
+      console.log(book)
+      console.log(shelf)
+      console.log(">>>>> OLD ARRAY <<<<<<<<")
+      console.log(this.state.books)
        // clone old state for search results on books
        let oldArray = this.state.books.slice()
        let newArray = oldArray.map((bk) => {
             if (bk.id === book.id) {
-              bk.shelf = shelf }
+                bk.shelf = shelf }
             return bk
           })
+      console.log(">>>>> NEW ARRAY <<<<<<<<")
+      console.log(newArray)
 
-      this.setState({ books: newArray})
+    this.setState({ books: newArray})
+
     }
   // render results of api search
   renderSearch = () => {
+
+    console.log(">>>>>RENDER SEARCH <<<<<<<<")
+    console.log(this.state.books)
     return this.state.books.map(book => (
         <DisplaySearch key={book.id} book={book} selectedOption={this.selectedOption} />
     ))

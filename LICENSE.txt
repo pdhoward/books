@@ -1,10 +1,4 @@
 
-Original starter repo cloned from Udacity where no license information was provided
-
-https://github.com/udacity/reactnd-project-myreads-starter
-
-All other updates and contributions are made under the following terms
-
 The MIT License (MIT)
 Copyright (c)2017 Patrick Howard
 

@@ -15,8 +15,6 @@ Getting the app running on your local machine takes only a few steps:
 
 Note that a backend server has been provided for testing purposes
 
-Thank you to [Udacity](https://www.udacity.com/)
-
 BooksAPI.js contains the set of methods for all required operations
 
 ### `getAll()`
